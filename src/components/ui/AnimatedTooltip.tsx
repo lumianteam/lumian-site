@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import {
   AnimatePresence,
@@ -9,12 +10,18 @@ import {
   useTransform,
 } from "framer-motion";
 
-export type TooltipItem = { name: string; role: string; initials: string };
+export type TooltipItem = {
+  name: string;
+  role: string;
+  initials: string;
+  image?: string;
+};
 
 /**
  * Animated tooltip avatar row (reimplemented from the Aceternity
  * "animated-tooltip"). Hovering an avatar springs a name/role tooltip in,
- * tilting toward the cursor. Avatars use initials (swap for photos later).
+ * tilting toward the cursor. A member photo is used when available, with
+ * initials kept as a graceful fallback.
  */
 export default function AnimatedTooltip({ items }: { items: TooltipItem[] }) {
   const [hovered, setHovered] = useState<number | null>(null);
@@ -64,9 +71,19 @@ export default function AnimatedTooltip({ items }: { items: TooltipItem[] }) {
           </AnimatePresence>
 
           <span
-            className="grid h-14 w-14 place-items-center rounded-full border-2 border-[#0a0908] bg-gradient-to-br from-white/25 to-white/[0.06] font-[var(--font-display)] text-sm font-bold text-foreground transition-transform duration-300 group-hover:z-30 group-hover:scale-105"
+            className="relative grid h-14 w-14 place-items-center overflow-hidden rounded-full border-2 border-[#0a0908] bg-gradient-to-br from-white/25 to-white/[0.06] font-[var(--font-display)] text-sm font-bold text-foreground transition-transform duration-300 group-hover:z-30 group-hover:scale-105"
           >
-            {item.initials}
+            {item.image ? (
+              <Image
+                src={item.image}
+                alt={item.name}
+                fill
+                sizes="56px"
+                className="object-cover"
+              />
+            ) : (
+              item.initials
+            )}
           </span>
         </div>
       ))}

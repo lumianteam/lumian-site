@@ -1,12 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * A perspective-tilted, auto-scrolling image grid (inspired by the Aceternity
- * "3D marquee" pattern, reimplemented for Lumian). Pass real project images via
- * `images`; until then it renders elegant dark placeholders.
+ * A perspective-tilted project grid. Each supplied image is rendered exactly
+ * once; subtle floating motion keeps the composition alive without a loop.
  */
 export default function ThreeDMarquee({
   images,
@@ -15,16 +15,16 @@ export default function ThreeDMarquee({
   images?: string[];
   className?: string;
 }) {
-  // 16 slots by default — swap in real screenshots later.
   const slots: (string | null)[] =
     images && images.length
       ? images
-      : Array.from({ length: 16 }, () => null);
+      : Array.from({ length: 8 }, () => null);
 
   const columns = [0, 1, 2, 3].map((c) =>
-    slots.filter((_, i) => i % 4 === c),
+    slots
+      .map((src, index) => ({ src, index }))
+      .filter(({ index }) => index % 4 === c),
   );
-  const durations = [34, 42, 38, 46];
 
   return (
     <div
@@ -44,17 +44,21 @@ export default function ThreeDMarquee({
           {columns.map((col, ci) => (
             <motion.div
               key={ci}
-              animate={{ y: ci % 2 === 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
+              initial={{ opacity: 0, y: ci % 2 === 0 ? 26 : -26 }}
+              whileInView={{ opacity: 1 }}
+              animate={{ y: ci % 2 === 0 ? [-12, 12, -12] : [12, -12, 12] }}
               transition={{
-                duration: durations[ci],
-                repeat: Infinity,
-                ease: "linear",
+                opacity: { duration: 0.7, delay: ci * 0.08 },
+                y: {
+                  duration: 8 + ci,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
               className="flex flex-col gap-5"
             >
-              {/* duplicate for a seamless loop */}
-              {[...col, ...col].map((src, i) => (
-                <Tile key={i} src={src} index={(ci * 100 + i) % slots.length} />
+              {col.map(({ src, index }) => (
+                <Tile key={`${src ?? "placeholder"}-${index}`} src={src} index={index} />
               ))}
             </motion.div>
           ))}
@@ -68,12 +72,13 @@ function Tile({ src, index }: { src: string | null; index: number }) {
   if (src) {
     return (
       <div className="overflow-hidden rounded-xl border border-white/10 bg-[#12100e]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={src}
           alt={`Project ${index + 1}`}
+          width={1536}
+          height={1024}
+          sizes="35vw"
           className="aspect-[16/10] w-full object-cover"
-          loading="lazy"
         />
       </div>
     );

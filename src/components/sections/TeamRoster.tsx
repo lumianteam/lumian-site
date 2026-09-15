@@ -1,15 +1,36 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/i18n/LanguageProvider";
 
 const members = [
-  { name: "Arefe Mousavi", initials: "AM" },
-  { name: "Aref Pourhashemi", initials: "AP" },
-  { name: "Mahdie Saffar", initials: "MS" },
-  { name: "Mehran Hatami", initials: "MH" },
-  { name: "Shirin Mohebi", initials: "SM" },
+    {
+    name: "Aref Pourhashemi",
+    initials: "AP",
+    image: "/images/team/aref-pourhashemi.png",
+  },
+  {
+    name: "Arefe Mousavi",
+    initials: "AM",
+    image: "/images/team/arefe-mousavi.png",
+  },
+    {
+    name: "Mehran Hatami",
+    initials: "MH",
+    image: "/images/team/mehran-hatami.png",
+  },
+  {
+    name: "Shirin Mohebi",
+    initials: "SM",
+    image: "/images/team/shirin-mohebi.png",
+  },
+  {
+    name: "Mahdie Saffar",
+    initials: "MS",
+    image: "/images/team/mahdie-saffar.png",
+  },
   { name: "Reyhane Firouzi", initials: "RF" },
 ];
 
@@ -41,8 +62,18 @@ export default function TeamRoster() {
             transition={{ delay: (i % 2) * 0.06 }}
             className="flex items-start gap-4 rounded-2xl border border-white/10 bg-[#0d0b09] p-5 transition-colors hover:border-white/20 sm:p-6"
           >
-            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] font-[var(--font-display)] text-lg font-bold text-foreground">
-              {m.initials}
+            <span className="relative grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] font-[var(--font-display)] text-lg font-bold text-foreground sm:h-24 sm:w-24">
+              {m.image ? (
+                <Image
+                  src={m.image}
+                  alt={m.name}
+                  fill
+                  sizes="(max-width: 640px) 80px, 96px"
+                  className="object-cover"
+                />
+              ) : (
+                m.initials
+              )}
             </span>
             <div>
               <h3 className="text-base font-semibold text-foreground">

@@ -5,22 +5,40 @@ import { motion } from "framer-motion";
 import { useLang } from "@/i18n/LanguageProvider";
 import AnimatedTooltip from "@/components/ui/AnimatedTooltip";
 
-const initials = ["AM", "AP", "MS", "MH", "SM", "RF"];
-const names = [
-  "Arefe Mousavi",
-  "Aref Pourhashemi",
-  "Mahdie Saffar",
-  "Mehran Hatami",
-  "Shirin Mohebi",
-  "Reyhane Firouzi",
+const members = [
+    {
+    name: "Aref Pourhashemi",
+    initials: "AP",
+    image: "/images/team/aref-pourhashemi.png",
+  },
+  {
+    name: "Arefe Mousavi",
+    initials: "AM",
+    image: "/images/team/arefe-mousavi.png",
+  },
+    {
+    name: "Mehran Hatami",
+    initials: "MH",
+    image: "/images/team/mehran-hatami.png",
+  },
+  {
+    name: "Shirin Mohebi",
+    initials: "SM",
+    image: "/images/team/shirin-mohebi.png",
+  },
+  {
+    name: "Mahdie Saffar",
+    initials: "MS",
+    image: "/images/team/mahdie-saffar.png",
+  },
+  { name: "Reyhane Firouzi", initials: "RF" },
 ];
 
 export default function TeamSection() {
   const { t } = useLang();
-  const people = names.map((name, i) => ({
-    name,
+  const people = members.map((member, i) => ({
+    ...member,
     role: t.team.roles[i],
-    initials: initials[i],
   }));
   return (
     <section id="team" className="relative py-20 sm:py-28">

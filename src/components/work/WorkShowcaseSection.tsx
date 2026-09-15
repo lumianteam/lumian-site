@@ -5,18 +5,18 @@ import { motion } from "framer-motion";
 import ThreeDMarquee from "./ThreeDMarquee";
 import { useLang } from "@/i18n/LanguageProvider";
 
-// Real project shots (more coming later) — repeated to fill the marquee.
+// Every project is passed to the marquee once so the home page stays unique.
 const PROJECT_IMAGES = [
-  "/images/projects/vakil.png",
-  "/images/projects/tennis.png",
-  "/images/projects/salamatab.png",
+  "/images/projects/lawyer-platform/poster-blurred.png",
+  "/images/projects/tennisor/poster-v2.png",
+  "/images/projects/salamatab/poster.png",
   "/images/projects/rahdari.png",
   "/images/projects/pishfactor.png",
+  "/images/projects/game-account-bot/poster.png",
+  "/images/projects/atrak/poster.png",
+  "/images/projects/tog-academy/poster.png",
 ];
-const marqueeImages = Array.from(
-  { length: 12 },
-  (_, i) => PROJECT_IMAGES[i % PROJECT_IMAGES.length],
-);
+const marqueeImages = PROJECT_IMAGES;
 
 /**
  * Home-page "selected work" section: a 3D marquee of project thumbnails with a

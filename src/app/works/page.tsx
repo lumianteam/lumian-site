@@ -4,18 +4,45 @@ import ResizableNavbar from "@/components/nav/ResizableNavbar";
 import HeroParallax, { type Product } from "@/components/work/HeroParallax";
 import SiteFooter from "@/components/layout/SiteFooter";
 
-// Real project shots (more coming later) — repeated to fill the 3 rows.
+// Each project is shown once in the user-controlled gallery.
 const projectShots: Product[] = [
-  { title: "Vakil", thumbnail: "/images/projects/vakil.png" },
-  { title: "Tennis", thumbnail: "/images/projects/tennis.png" },
-  { title: "Salamatab", thumbnail: "/images/projects/salamatab.png" },
+  {
+    title: "وکیل‌وکیل · Lawyer Platform",
+    thumbnail: "/images/projects/lawyer-platform/poster-blurred.png",
+    link: "/works/vakilvakil",
+  },
+  {
+    title: "تنیسور · Racket Sports Platform",
+    thumbnail: "/images/projects/tennisor/poster-v2.png",
+    link: "/works/tennisor",
+  },
+  {
+    title: "سلامتطب · Clinic Management",
+    thumbnail: "/images/projects/salamatab/poster.png",
+    link: "/works/salamatab",
+  },
   { title: "Rahdari", thumbnail: "/images/projects/rahdari.png" },
-  { title: "Pishfactor", thumbnail: "/images/projects/pishfactor.png" },
+  {
+    title: "سامانه پیش‌فاکتور · Proforma System",
+    thumbnail: "/images/projects/pishfactor.png",
+    link: "/works/pishfactor",
+  },
+  {
+    title: "فروشگاه‌بازی · Game Account Bot",
+    thumbnail: "/images/projects/game-account-bot/poster.png",
+    link: "/works/game-account-bot",
+  },
+  {
+    title: "سامانه اترک · Tile Operations",
+    thumbnail: "/images/projects/atrak/poster.png",
+    link: "/works/atrak",
+  },
+  {
+    title: "آکادمی تاگ · Photography Education",
+    thumbnail: "/images/projects/tog-academy/poster.png",
+    link: "/works/tog-academy",
+  },
 ];
-const products: Product[] = Array.from(
-  { length: 15 },
-  (_, i) => projectShots[i % projectShots.length],
-);
 
 export const metadata: Metadata = {
   title: "Work — Lumian",
@@ -29,7 +56,7 @@ export default function WorksPage() {
       <div className="min-h-screen bg-[#0a0908] text-foreground">
         <ResizableNavbar />
         <main>
-          <HeroParallax products={products} />
+          <HeroParallax products={projectShots} />
         </main>
         <SiteFooter />
       </div>
