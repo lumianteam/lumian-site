@@ -3,6 +3,7 @@ import { LanguageProvider } from "@/i18n/LanguageProvider";
 import ResizableNavbar from "@/components/nav/ResizableNavbar";
 import TeamRoster from "@/components/sections/TeamRoster";
 import SiteFooter from "@/components/layout/SiteFooter";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 
 export const metadata: Metadata = {
   title: "Team — Lumian",
@@ -13,12 +14,15 @@ export const metadata: Metadata = {
 export default function TeamPage() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-[#0a0908] text-foreground">
+      <div className="relative min-h-screen bg-[#07070a] text-foreground">
+        <AmbientBackground />
         <ResizableNavbar />
-        <main>
+        <main className="relative z-[2]">
           <TeamRoster />
         </main>
-        <SiteFooter />
+        <div className="relative z-[2]">
+          <SiteFooter />
+        </div>
       </div>
     </LanguageProvider>
   );

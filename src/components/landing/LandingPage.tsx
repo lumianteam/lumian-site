@@ -4,7 +4,9 @@ import dynamic from "next/dynamic";
 import { MotionConfig, useReducedMotion } from "framer-motion";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import ResizableNavbar from "@/components/nav/ResizableNavbar";
+import AmbientBackground from "@/components/ui/AmbientBackground";
 import Hero from "@/components/hero/Hero";
+import StatsStrip from "@/components/sections/StatsStrip";
 import WorkShowcaseSection from "@/components/work/WorkShowcaseSection";
 import FeaturesSection from "@/components/sections/FeaturesSection";
 import TeamSection from "@/components/sections/TeamSection";
@@ -24,23 +26,25 @@ export default function LandingPage() {
   return (
     <LanguageProvider>
       <MotionConfig reducedMotion="user">
-      <div className="landing">
-        {/* particles behind everything */}
-        <ParticleBackground reduced={prefersReduced} />
+        <div className="landing">
+          {/* backdrop: CSS aurora first, then the WebGL particle field on top */}
+          <AmbientBackground />
+          <ParticleBackground reduced={prefersReduced} />
 
-        {/* resizable, scroll-aware navbar */}
-        <ResizableNavbar />
+          {/* resizable, scroll-aware navbar */}
+          <ResizableNavbar />
 
-        <main className="landing__main">
-          <Hero />
-          <FeaturesSection />
-          <TeamSection />
-          <WorkShowcaseSection />
-          <CTASection />
-        </main>
+          <main className="landing__main">
+            <Hero />
+            <StatsStrip />
+            <FeaturesSection />
+            <TeamSection />
+            <WorkShowcaseSection />
+            <CTASection />
+          </main>
 
-        <SiteFooter />
-      </div>
+          <SiteFooter />
+        </div>
       </MotionConfig>
     </LanguageProvider>
   );

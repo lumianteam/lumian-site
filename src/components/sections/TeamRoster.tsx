@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLang } from "@/i18n/LanguageProvider";
+import SpotlightPanel from "@/components/ui/SpotlightPanel";
 
 const members = [
     {
@@ -41,12 +42,11 @@ export default function TeamRoster() {
   return (
     <section className="relative px-6 pt-36 pb-24 sm:pt-44">
       <div className="mx-auto max-w-3xl text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.25em] text-[#FFA63D]">
+        <span className="eyebrow-pill">
+          <span className="eyebrow-pill__dot" />
           {tp.eyebrow}
-        </p>
-        <h1 className="mt-3 font-[var(--font-display)] text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          {tp.title}
-        </h1>
+        </span>
+        <h1 className="display-title mt-6 text-4xl sm:text-5xl">{tp.title}</h1>
         <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted">
           {tp.lead}
         </p>
@@ -60,8 +60,9 @@ export default function TeamRoster() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ delay: (i % 2) * 0.06 }}
-            className="flex items-start gap-4 rounded-2xl border border-white/10 bg-[#0d0b09] p-5 transition-colors hover:border-white/20 sm:p-6"
+            className="flex"
           >
+            <SpotlightPanel className="roster-card flex w-full items-start gap-4 p-5 sm:p-6">
             <span className="relative grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] font-[var(--font-display)] text-lg font-bold text-foreground sm:h-24 sm:w-24">
               {m.image ? (
                 <Image
@@ -75,7 +76,7 @@ export default function TeamRoster() {
                 m.initials
               )}
             </span>
-            <div>
+            <div className="relative">
               <h3 className="text-base font-semibold text-foreground">
                 {m.name}
               </h3>
@@ -86,21 +87,16 @@ export default function TeamRoster() {
                 {tp.bios[i]}
               </p>
             </div>
+            </SpotlightPanel>
           </motion.div>
         ))}
       </div>
 
       <div className="mx-auto mt-14 flex max-w-4xl flex-wrap items-center justify-center gap-3">
-        <a
-          href="mailto:lumian.team@gmail.com"
-          className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#0a0908] transition-transform hover:-translate-y-0.5"
-        >
+        <a href="mailto:lumian.team@gmail.com" className="btn-primary">
           {t.cta.primary}
         </a>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-white/30"
-        >
+        <Link href="/" className="btn-ghost">
           {tp.back}
         </Link>
       </div>

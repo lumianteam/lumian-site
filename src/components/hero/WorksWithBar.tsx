@@ -33,7 +33,7 @@ export default function WorksWithBar() {
         className="workswith"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.7, delay: 0.46, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* soft halo behind the bar */}
         <div className="workswith__halo" aria-hidden />

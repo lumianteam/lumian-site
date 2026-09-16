@@ -8,6 +8,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import WorksWithBar from "./WorksWithBar";
 import useScrollScene from "@/hooks/useScrollScene";
@@ -15,6 +17,23 @@ import { useLang } from "@/i18n/LanguageProvider";
 
 // The WebGL scene is lazy + client-only, and never server-rendered.
 const GravityScene = dynamic(() => import("./GravityScene"), { ssr: false });
+
+// The faces behind the "6 builders" proof chip — same people as /team.
+const FACES = [
+  { initials: "AP", image: "/images/team/aref-pourhashemi.png" },
+  { initials: "AM", image: "/images/team/arefe-mousavi.png" },
+  { initials: "MH", image: "/images/team/mehran-hatami.png" },
+  { initials: "SM", image: "/images/team/shirin-mohebi.png" },
+  { initials: "MS", image: "/images/team/mahdie-saffar.png" },
+  { initials: "RF" },
+];
+
+// One shared entrance curve; each block just picks a delay off the ladder.
+const rise = (delay: number) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] as const },
+});
 
 export default function Hero() {
   const { t } = useLang();
@@ -86,39 +105,93 @@ export default function Hero() {
       {/* soft scrim behind the copy so it stays readable over the bright grid */}
       <div className="hero__scrim" aria-hidden />
 
-      <div ref={overlayRef} className="hero__overlay">
-        <motion.span
-          className="hero__eyebrow"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <span className="hero__eyebrow-dot" />
-          {t.hero.badge}
-        </motion.span>
+      <div className="hero__content">
+        <div ref={overlayRef} className="hero__overlay">
+          <motion.span className="eyebrow-pill" {...rise(0)}>
+            <span className="eyebrow-pill__dot" />
+            {t.hero.badge}
+          </motion.span>
 
-        <motion.h1
-          className="hero__title"
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {t.hero.title1}
-          <br />
-          <span className="hero__title-accent">{t.hero.title2}</span>
-        </motion.h1>
+          <motion.h1
+            className="hero__title display-title"
+            {...rise(0.08)}
+          >
+            {t.hero.title1}{" "}
+            <span className="hero__title-accent">{t.hero.title2}</span>
+          </motion.h1>
 
-        <motion.p
-          className="hero__subtitle"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {t.hero.subtitle}
-        </motion.p>
+          <motion.p className="hero__subtitle" {...rise(0.16)}>
+            {t.hero.subtitle}
+          </motion.p>
+
+          <motion.div className="hero__actions" {...rise(0.24)}>
+            <Link href="/#contact" className="btn-primary">
+              {t.hero.ctaPrimary}
+              <Arrow />
+            </Link>
+            <Link href="/works" className="btn-ghost">
+              {t.hero.ctaSecondary}
+              <Arrow />
+            </Link>
+          </motion.div>
+
+          {/* social proof — the team behind the work, with the headline numbers */}
+          <motion.div className="hero__proof" {...rise(0.32)}>
+            <div className="hero__proof-avatars">
+              {FACES.map((f) => (
+                <span key={f.initials} className="hero__proof-avatar">
+                  {f.image ? (
+                    <Image
+                      src={f.image}
+                      alt=""
+                      fill
+                      sizes="30px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    f.initials
+                  )}
+                </span>
+              ))}
+            </div>
+            <span className="hero__proof-text">
+              <b>{t.hero.proofTeam}</b> · {t.hero.proofRest}
+            </span>
+          </motion.div>
+
+          {/* the categories we actually build in */}
+          <motion.div className="hero__pills" {...rise(0.38)}>
+            {t.hero.pills.map((p) => (
+              <span key={p} className="hero__pill">
+                {p}
+              </span>
+            ))}
+          </motion.div>
+        </div>
+
+        <WorksWithBar />
       </div>
-
-      <WorksWithBar />
     </section>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+      className="rtl-flip"
+    >
+      <path
+        d="M5 12h14m0 0-6-6m6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

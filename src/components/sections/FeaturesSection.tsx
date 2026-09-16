@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useLang } from "@/i18n/LanguageProvider";
+import SpotlightPanel from "@/components/ui/SpotlightPanel";
 
 const AMBER = "#FFA63D";
 
@@ -12,6 +13,13 @@ const visuals: ReactNode[] = [
   <FlowVisual key="f" />,
 ];
 
+const rise = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
+});
+
 export default function FeaturesSection() {
   const { t } = useLang();
   const features = t.features.items.map((item, i) => ({
@@ -19,60 +27,63 @@ export default function FeaturesSection() {
     description: item.desc,
     visual: visuals[i],
   }));
+
   return (
-    <section id="services" className="relative py-20 sm:py-28">
+    <section id="services" className="section">
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          className="text-xs font-medium uppercase tracking-[0.25em]"
-          style={{ color: AMBER }}
-        >
+        <motion.span className="eyebrow-pill" {...rise()}>
+          <span className="eyebrow-pill__dot" />
           {t.features.eyebrow}
-        </motion.p>
+        </motion.span>
+
         <motion.h2
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ delay: 0.05 }}
-          className="mt-3 font-[var(--font-display)] text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+          className="display-title mt-6 text-3xl sm:text-4xl lg:text-[2.9rem]"
+          {...rise(0.05)}
         >
           {t.features.title}
         </motion.h2>
+
         <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ delay: 0.1 }}
-          className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted"
+          className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted"
+          {...rise(0.1)}
         >
           {t.features.lead}
         </motion.p>
       </div>
 
-      {/* mobile: horizontal swipe slider · desktop: 3-column bordered grid */}
-      <div className="mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-1 [&::-webkit-scrollbar]:hidden sm:mt-16 md:mx-auto md:max-w-6xl md:grid md:grid-cols-3 md:gap-0 md:overflow-hidden md:rounded-3xl md:border md:border-white/10 md:bg-white/[0.02] md:px-0 md:pb-0">
+      <div className="svc-grid mx-auto mt-14 max-w-6xl px-6 sm:mt-16">
         {features.map((f, i) => (
-          <motion.div
-            key={f.title}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ delay: i * 0.1 }}
-            className={`group w-[80%] shrink-0 snap-center p-6 max-md:rounded-2xl max-md:border max-md:border-white/10 max-md:bg-white/[0.03] md:w-auto md:shrink md:p-10 ${
-              i < features.length - 1 ? "md:border-e md:border-white/12" : ""
-            }`}
-          >
-            <div className="flex h-32 items-center justify-center sm:h-44">
-              {f.visual}
-            </div>
-            <h3 className="mt-6 text-lg font-semibold text-foreground sm:mt-8 sm:text-xl">
-              {f.title}
-            </h3>
-            <p className="mt-3 text-[15px] leading-relaxed text-muted">
-              {f.description}
-            </p>
+          <motion.div key={f.title} {...rise(0.08 * i)} className="flex">
+            <SpotlightPanel className="svc-card group w-full">
+              <span className="svc-card__index">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+
+              <div className="svc-card__visual">{f.visual}</div>
+
+              <h3 className="svc-card__title">{f.title}</h3>
+              <p className="svc-card__desc">{f.description}</p>
+
+              <span className="svc-card__foot">
+                {t.features.more}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden
+                  className="rtl-flip"
+                >
+                  <path
+                    d="M5 12h14m0 0-6-6m6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </SpotlightPanel>
           </motion.div>
         ))}
       </div>
@@ -84,7 +95,7 @@ export default function FeaturesSection() {
 
 function Panel({ children }: { children: ReactNode }) {
   return (
-    <div className="relative h-40 w-full max-w-[260px] overflow-hidden rounded-xl border border-white/10 bg-[#0d0b09] p-4 shadow-[0_10px_30px_rgba(0,0,0,0.4)] transition-transform duration-500 group-hover:-translate-y-1">
+    <div className="relative h-40 w-full max-w-[260px] overflow-hidden rounded-xl border border-white/10 bg-[#0c0b10]/90 p-4 shadow-[0_14px_40px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:rotate-[0.6deg]">
       {children}
     </div>
   );
@@ -110,7 +121,7 @@ function BrowserVisual() {
       </div>
       <div className="mt-5 space-y-2.5">
         <Bar w="80%" />
-        <Bar w="55%" />
+        <Bar w="55%" amber />
         <Bar w="68%" />
         <Bar w="40%" />
         <Bar w="60%" />
@@ -134,8 +145,7 @@ function DataVisual() {
             transition={{ delay: 0.15 + i * 0.08, duration: 0.6, ease: "easeOut" }}
             className="w-full rounded-sm"
             style={{
-              background:
-                i === 3 ? AMBER : "rgba(255,255,255,0.16)",
+              background: i === 3 ? AMBER : "rgba(255,255,255,0.16)",
             }}
           />
         ))}
@@ -170,7 +180,10 @@ function FlowVisual() {
               key={r}
               className="flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.04] px-2 py-1"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
+              <span
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ background: r === 1 ? AMBER : "rgba(255,255,255,0.3)" }}
+              />
               <span className="h-1.5 flex-1 rounded-full bg-white/15" />
             </div>
           ))}

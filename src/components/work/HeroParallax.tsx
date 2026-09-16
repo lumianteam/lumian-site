@@ -72,6 +72,7 @@ export default function HeroParallax({ products }: { products?: Product[] }) {
         ref={parallaxRef}
         className="relative flex h-[300vh] flex-col overflow-hidden py-40 antialiased [perspective:1000px] [transform-style:preserve-3d]"
       >
+        <div className="works-hero__veil" aria-hidden />
         <Header />
         <motion.div style={{ rotateX, rotateZ, translateY, opacity }}>
           <ParallaxRow
@@ -103,11 +104,12 @@ export default function HeroParallax({ products }: { products?: Product[] }) {
 function Header() {
   const { t } = useLang();
   return (
-    <div className="relative mx-auto w-full max-w-7xl px-6 py-20 md:py-32">
-      <p className="text-xs font-medium uppercase tracking-[0.25em] text-[#FFA63D]">
+    <div className="works-hero__copy relative mx-auto w-full max-w-7xl px-6 py-20 md:py-32">
+      <span className="eyebrow-pill">
+        <span className="eyebrow-pill__dot" />
         {t.worksPage.eyebrow}
-      </p>
-      <h1 className="mt-4 font-[var(--font-display)] text-4xl font-bold tracking-tight text-foreground md:text-7xl">
+      </span>
+      <h1 className="display-title mt-6 text-4xl md:text-7xl">
         {t.worksPage.title1} <br /> {t.worksPage.title2}
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
@@ -397,18 +399,19 @@ function ProjectPicker({ products }: { products: Product[] }) {
   }
 
   return (
-    <section className="relative border-t border-white/10 py-24 sm:py-32">
+    <section className="works-picker relative py-24 sm:py-32">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-[radial-gradient(circle_at_50%_0%,rgba(255,166,61,0.08),transparent_70%)]" />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6">
         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-[#FFA63D]">
+            <span className="eyebrow-pill">
+              <span className="eyebrow-pill__dot" />
               {lang === "fa" ? "همه پروژه‌ها" : "All projects"}
-            </p>
-            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-foreground sm:text-5xl">
+            </span>
+            <h2 className="display-title mt-5 text-3xl sm:text-5xl">
               {labels.title}
             </h2>
-            <p className="mt-3 text-sm text-muted sm:text-base">{labels.lead}</p>
+            <p className="mt-4 text-sm text-muted sm:text-base">{labels.lead}</p>
           </div>
           <p className="shrink-0 font-mono text-xs text-white/55" aria-live="polite">
             {String(activeIndex + 1).padStart(2, "0")} / {String(products.length).padStart(2, "0")}

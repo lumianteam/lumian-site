@@ -3,71 +3,79 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import ThreeDMarquee from "./ThreeDMarquee";
+import WorkCarousel from "./WorkCarousel";
+import { showcase } from "@/data/showcase";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { useLang } from "@/i18n/LanguageProvider";
 
-// Every project is passed to the marquee once so the home page stays unique.
-const PROJECT_IMAGES = [
-  "/images/projects/lawyer-platform/poster-blurred.png",
-  "/images/projects/tennisor/poster-v2.png",
-  "/images/projects/salamatab/poster.png",
-  "/images/projects/rahdari.png",
-  "/images/projects/pishfactor.png",
-  "/images/projects/game-account-bot/poster.png",
-  "/images/projects/atrak/poster.png",
-  "/images/projects/tog-academy/poster.png",
-];
-const marqueeImages = PROJECT_IMAGES;
+const marqueeImages = showcase.map((p) => p.thumbnail);
+
+const rise = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
+});
 
 /**
- * Home-page "selected work" section: a 3D marquee of project thumbnails with a
- * CTA into the full /works page.
+ * Home-page "selected work" section: a 3D marquee of project thumbnails on
+ * desktop, a swipeable carousel on phones, with a CTA into the full /works page.
  */
 export default function WorkShowcaseSection() {
   const { t } = useLang();
+  // The tilted 3D grid only reads well with room to breathe; phones get a
+  // swipeable rail instead. Rendering just one of the two keeps a phone from
+  // downloading the marquee's eight thumbnails as well.
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   return (
-    <section id="work" className="relative py-20 sm:py-28">
+    <section id="work" className="section">
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          className="text-xs font-medium uppercase tracking-[0.25em] text-[#FFA63D]"
-        >
+        <motion.span className="eyebrow-pill" {...rise()}>
+          <span className="eyebrow-pill__dot" />
           {t.work.eyebrow}
-        </motion.p>
+        </motion.span>
         <motion.h2
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ delay: 0.05 }}
-          className="mt-3 font-[var(--font-display)] text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+          className="display-title mt-6 text-3xl sm:text-4xl lg:text-[2.9rem]"
+          {...rise(0.05)}
         >
           {t.work.title}
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ delay: 0.1 }}
-          className="mt-4 text-base leading-relaxed text-muted"
+          className="mt-5 text-base leading-relaxed text-muted"
+          {...rise(0.1)}
         >
           {t.work.lead}
         </motion.p>
       </div>
 
       <div className="mt-12 w-full overflow-hidden">
-        <ThreeDMarquee images={marqueeImages} />
+        {isDesktop ? (
+          <ThreeDMarquee images={marqueeImages} />
+        ) : (
+          <WorkCarousel projects={showcase} label={t.work.swipe} />
+        )}
       </div>
 
       <div className="mt-12 flex justify-center">
-        <Link
-          href="/works"
-          className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-[#FFA63D]/40 hover:bg-[#FFA63D]/[0.06]"
-        >
+        <Link href="/works" className="btn-ghost">
           {t.work.cta}
-          <span className="transition-transform group-hover:translate-x-0.5 rtl-flip">
-            →
-          </span>
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden
+            className="rtl-flip"
+          >
+            <path
+              d="M5 12h14m0 0-6-6m6 6-6 6"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </Link>
       </div>
     </section>

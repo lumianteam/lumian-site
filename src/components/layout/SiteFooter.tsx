@@ -37,8 +37,10 @@ export default function SiteFooter() {
   ];
 
   return (
-    <footer className="relative isolate overflow-hidden bg-[#0a0908] pt-28 sm:pt-40">
-      {/* glowing ridge artwork — full width, natural aspect, anchored bottom */}
+    <footer className="relative isolate overflow-hidden pt-28 sm:pt-40">
+      {/* glowing ridge artwork — full width, natural aspect, anchored bottom.
+          Masked rather than covered, so the page backdrop runs straight
+          through the footer instead of stopping at its top edge. */}
       <Image
         src="/images/footer.webp"
         alt=""
@@ -46,11 +48,7 @@ export default function SiteFooter() {
         width={2560}
         height={550}
         sizes="100vw"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-auto w-full select-none"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-[#0a0908] via-[#0a0908]/60 to-transparent"
+        className="footer-ridge pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-auto w-full select-none"
       />
 
       <div className="mx-auto max-w-6xl px-6">

@@ -40,7 +40,14 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} ${iranSans.variable}`}
     >
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      {/* Browser extensions inject attributes onto <body> before hydration
+          (ColorZilla's cz-shortcut-listen, Grammarly's data-gr-*, …). Those
+          are outside our control and harmless, so keep the DOM's version
+          instead of letting React report a mismatch. */}
+      <body
+        className="min-h-screen bg-background text-foreground antialiased"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

@@ -18,9 +18,29 @@ export const dictionary = {
         "We build websites, online stores, custom tools, and technical solutions that help your business look more professional, work better, and grow online.",
       worksWith: "Works with",
       worksCta: "Start a project",
+      ctaPrimary: "Start a project",
+      ctaSecondary: "See our work",
+      proofTeam: "6 builders",
+      proofRest: "20+ projects shipped",
+      pills: [
+        "Websites",
+        "Online stores",
+        "Admin panels",
+        "Automation",
+        "IT support",
+      ],
+    },
+    stats: {
+      items: [
+        { value: "20+", label: "Projects shipped" },
+        { value: "6", label: "In-house builders" },
+        { value: "5+", label: "Years building" },
+        { value: "100%", label: "Direct communication" },
+      ],
     },
     features: {
       eyebrow: "Services",
+      more: "Talk to us",
       title: "What we do at Lumian",
       lead: "Every business is different — so before we build, we study what you actually need, then propose something genuinely usable, scalable, and right for your budget.",
       items: [
@@ -43,6 +63,7 @@ export const dictionary = {
       title: "The Lumian design & dev team.",
       lead: "Small and senior on purpose — the person who builds your project is the person you talk to, with no layers in between.",
       cta: "Meet the team",
+      disciplines: ["Frontend", "Backend", "UI/UX", "Automation"],
       roles: [
         "Team Leader . Backend developer",
         "ّProject Manager . Frontend Developer · Motion",
@@ -71,6 +92,7 @@ export const dictionary = {
       title: "Projects we've shipped",
       lead: "A sample of the sites, stores, and digital tools we've designed and built for different businesses.",
       cta: "View all work",
+      swipe: "Swipe to explore",
     },
     worksPage: {
       eyebrow: "The work",
@@ -124,9 +146,29 @@ export const dictionary = {
         "ما سایت، فروشگاه اینترنتی، ابزارهای اختصاصی و راهکارهای فنی می‌سازیم تا کسب‌وکار شما حرفه‌ای‌تر دیده شود، بهتر کار کند و آنلاین رشد کند.",
       worksWith: "ساخته‌شده با",
       worksCta: "شروع همکاری",
+      ctaPrimary: "شروع همکاری",
+      ctaSecondary: "دیدن نمونه‌کارها",
+      proofTeam: "۶ متخصص",
+      proofRest: "بیش از ۲۰ پروژه اجراشده",
+      pills: [
+        "طراحی سایت",
+        "فروشگاه اینترنتی",
+        "پنل مدیریت",
+        "اتوماسیون",
+        "پشتیبانی فنی",
+      ],
+    },
+    stats: {
+      items: [
+        { value: "+۲۰", label: "پروژه اجراشده" },
+        { value: "۶", label: "متخصص داخلی" },
+        { value: "+۵", label: "سال تجربه" },
+        { value: "۱۰۰٪", label: "ارتباط بی‌واسطه" },
+      ],
     },
     features: {
       eyebrow: "خدمات",
+      more: "مشورت بگیرید",
       title: "کارهایی که در لومیان انجام می‌دهیم",
       lead: "نیاز هر کسب‌وکار متفاوت است؛ برای همین قبل از اجرا، نیازتان را دقیق بررسی می‌کنیم و بعد راهکاری پیشنهاد می‌دهیم که واقعاً قابل استفاده، قابل توسعه و مناسب بودجه شما باشد.",
       items: [
@@ -149,6 +191,7 @@ export const dictionary = {
       title: "تیم طراحی توسعه لومیان",
       lead: "تیمی کوچک و حرفه‌ای؛ همان کسی که پروژه را می‌سازد، همان کسی است که با او حرف می‌زنید — بدون واسطه.",
       cta: "آشنایی با تیم",
+      disciplines: ["فرانت‌اند", "بک‌اند", "طراحی UI/UX", "اتوماسیون"],
       roles: [
         "توسعه‌دهنده · موشن · وب",
         "توسعه‌دهنده بک‌اند",
@@ -177,6 +220,7 @@ export const dictionary = {
       title: "پروژه‌هایی که اجرا کرده‌ایم",
       lead: "نمونه‌ای از سایت‌ها، فروشگاه‌ها و ابزارهای دیجیتالی که برای کسب‌وکارهای مختلف طراحی و پیاده‌سازی کرده‌ایم.",
       cta: "مشاهده نمونه‌کارها",
+      swipe: "برای دیدن بقیه بکشید",
     },
     worksPage: {
       eyebrow: "نمونه‌کارها",
