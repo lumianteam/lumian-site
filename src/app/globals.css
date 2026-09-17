@@ -570,6 +570,7 @@ body {
 .orbit__glow {
   position: absolute;
   inset: 12%;
+  pointer-events: none;
   border-radius: 50%;
   background: radial-gradient(
     circle,
@@ -587,6 +588,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: visible;
+  pointer-events: none;
 }
 .orbit__guide {
   fill: none;
@@ -644,6 +646,7 @@ body {
   position: absolute;
   inset: 0;
   animation: orbit-spin var(--orbit-duration, 46s) linear infinite;
+  pointer-events: none;
 }
 .orbit__ring--reverse {
   animation-direction: reverse;
@@ -658,6 +661,15 @@ body {
   position: absolute;
   inset: 0;
   transform: rotate(var(--a));
+  /* the node fills the whole figure; without this it would cover every other
+     node's avatar and only the last one would ever be hoverable */
+  pointer-events: none;
+}
+/* lift the hovered face's whole branch so its tag can't be painted under a
+   neighbouring node (each ring/node makes its own stacking context) */
+.orbit__ring:has(.orbit__face:hover),
+.orbit__node:has(.orbit__face:hover) {
+  z-index: 10;
 }
 .orbit__anchor {
   position: absolute;
@@ -706,9 +718,10 @@ body {
   font-size: 0.72rem;
   font-weight: 700;
   color: #f2f2f6;
+  pointer-events: auto;
   transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
-.orbit__node:hover .orbit__face {
+.orbit__face:hover {
   border-color: rgba(255, 166, 61, 0.65);
   box-shadow: 0 0 0 4px rgba(255, 166, 61, 0.14),
     0 10px 30px rgba(0, 0, 0, 0.55);
@@ -734,7 +747,7 @@ body {
   pointer-events: none;
   z-index: 5;
 }
-.orbit__node:hover .orbit__tag {
+.orbit__face:hover + .orbit__tag {
   opacity: 1;
   translate: -50% 4px;
 }
@@ -1268,4 +1281,43 @@ body {
 .footer-ridge {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 58%);
   mask-image: linear-gradient(to bottom, transparent 0%, #000 58%);
+}
+
+/* The 3D project marquee fades out at its own edges with a mask rather than an
+   opaque vignette, so the page backdrop shows straight through instead of the
+   block reading as a black rectangle dropped onto the section.
+
+   Two nested single-axis fades, not one radial: an ellipse would cut a visibly
+   curved arc out of the artwork. A mask per axis keeps the edges straight. */
+.marquee-3d {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 13%,
+    #000 87%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 13%,
+    #000 87%,
+    transparent 100%
+  );
+}
+.marquee-3d__inner {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 14%,
+    #000 84%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 14%,
+    #000 84%,
+    transparent 100%
+  );
 }

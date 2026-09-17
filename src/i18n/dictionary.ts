@@ -66,7 +66,7 @@ export const dictionary = {
       disciplines: ["Frontend", "Backend", "UI/UX", "Automation"],
       roles: [
         "Team Leader . Backend developer",
-        "ّProject Manager . Frontend Developer · Motion",
+        "Project Manager · Frontend Developer · Motion",
         "Graphic design",
         "Frontend developer",
         "Backend developer",

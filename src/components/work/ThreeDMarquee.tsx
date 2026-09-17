@@ -29,39 +29,38 @@ export default function ThreeDMarquee({
   return (
     <div
       className={cn(
-        "relative mx-auto block h-[420px] w-full overflow-hidden sm:h-[600px]",
+        "marquee-3d relative mx-auto block h-[420px] w-full overflow-hidden sm:h-[600px]",
         className,
       )}
     >
-      {/* edge fades into the page */}
-      <div className="pointer-events-none absolute inset-0 z-20 [background:radial-gradient(ellipse_at_center,transparent_55%,#0a0908_92%)]" />
-
-      <div className="flex size-full items-center justify-center [perspective:1100px]">
-        <div
-          className="grid w-[140%] shrink-0 grid-cols-4 gap-5 [transform:rotateX(46deg)_rotateZ(-11deg)_scale(1.06)]"
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          {columns.map((col, ci) => (
-            <motion.div
-              key={ci}
-              initial={{ opacity: 0, y: ci % 2 === 0 ? 26 : -26 }}
-              whileInView={{ opacity: 1 }}
-              animate={{ y: ci % 2 === 0 ? [-12, 12, -12] : [12, -12, 12] }}
-              transition={{
-                opacity: { duration: 0.7, delay: ci * 0.08 },
-                y: {
-                  duration: 8 + ci,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
-              }}
-              className="flex flex-col gap-5"
-            >
-              {col.map(({ src, index }) => (
-                <Tile key={`${src ?? "placeholder"}-${index}`} src={src} index={index} />
-              ))}
-            </motion.div>
-          ))}
+      <div className="marquee-3d__inner size-full">
+        <div className="flex size-full items-center justify-center [perspective:1100px]">
+          <div
+            className="grid w-[140%] shrink-0 grid-cols-4 gap-5 [transform:rotateX(46deg)_rotateZ(-11deg)_scale(1.06)]"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {columns.map((col, ci) => (
+              <motion.div
+                key={ci}
+                initial={{ opacity: 0, y: ci % 2 === 0 ? 26 : -26 }}
+                whileInView={{ opacity: 1 }}
+                animate={{ y: ci % 2 === 0 ? [-12, 12, -12] : [12, -12, 12] }}
+                transition={{
+                  opacity: { duration: 0.7, delay: ci * 0.08 },
+                  y: {
+                    duration: 8 + ci,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  },
+                }}
+                className="flex flex-col gap-5"
+              >
+                {col.map(({ src, index }) => (
+                  <Tile key={`${src ?? "placeholder"}-${index}`} src={src} index={index} />
+                ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

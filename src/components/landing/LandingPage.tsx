@@ -38,8 +38,8 @@ export default function LandingPage() {
             <Hero />
             <StatsStrip />
             <FeaturesSection />
-            <TeamSection />
             <WorkShowcaseSection />
+            <TeamSection />
             <CTASection />
           </main>
 
