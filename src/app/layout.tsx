@@ -28,6 +28,10 @@ export const metadata: Metadata = {
   title: "Lumian — Software & Data Studio",
   description:
     "Lumian is a software & data studio. We build fast websites and apps, turn raw data into insight, and run reliable web-scraping & automation — end to end.",
+  // Renders <meta name="enamad" content="19901651" /> for eNamad verification.
+  other: {
+    enamad: "19901651",
+  },
 };
 
 export default function RootLayout({
