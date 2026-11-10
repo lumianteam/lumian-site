@@ -100,12 +100,15 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          <div className="mt-10 flex items-center gap-2 border-t border-white/5 pt-6">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-            </span>
-            <span className="text-sm text-foreground/80">{f.status}</span>
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+              </span>
+              <span className="text-sm text-foreground/80">{f.status}</span>
+            </div>
+            <EnamadSeal />
           </div>
         </div>
 
@@ -114,6 +117,32 @@ export default function SiteFooter() {
         </p>
       </div>
     </footer>
+  );
+}
+
+// eNamad trust seal — markup kept as eNamad issues it. A plain <img> (not
+// next/image) so the logo is fetched straight from trustseal.enamad.ir with
+// referrerpolicy="origin", which eNamad uses to verify the domain.
+const ENAMAD_ID = "8624965";
+const ENAMAD_CODE = "toFSFeiT52qtICSdRUTKX9dLc0yvYn4a";
+
+function EnamadSeal() {
+  return (
+    <a
+      referrerPolicy="origin"
+      target="_blank"
+      href={`https://trustseal.enamad.ir/?id=${ENAMAD_ID}&Code=${ENAMAD_CODE}`}
+      className="block shrink-0"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        referrerPolicy="origin"
+        src={`https://trustseal.enamad.ir/logo.aspx?id=${ENAMAD_ID}&Code=${ENAMAD_CODE}`}
+        alt=""
+        style={{ cursor: "pointer" }}
+        {...{ code: ENAMAD_CODE }}
+      />
+    </a>
   );
 }
 
