@@ -120,45 +120,16 @@ export default function SiteFooter() {
   );
 }
 
-// eNamad trust seal — markup kept as eNamad issues it. A plain <img> (not
-// next/image) so the logo is fetched straight from trustseal.enamad.ir with
-// referrerpolicy="origin", which eNamad uses to verify the domain.
-const ENAMAD_ID = "8624965";
-const ENAMAD_CODE = "toFSFeiT52qtICSdRUTKX9dLc0yvYn4a";
+// eNamad trust seal — the exact markup eNamad issued, injected verbatim so
+// nothing (React attribute handling, next/image, styling) alters it.
+const ENAMAD_HTML = `<a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8624965&Code=toFSFeiT52qtICSdRUTKX9dLc0yvYn4a'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8624965&Code=toFSFeiT52qtICSdRUTKX9dLc0yvYn4a' alt='' style='cursor:pointer' code='toFSFeiT52qtICSdRUTKX9dLc0yvYn4a'></a>`;
 
 function EnamadSeal() {
   return (
-    <a
-      referrerPolicy="origin"
-      target="_blank"
-      href={`https://trustseal.enamad.ir/?id=${ENAMAD_ID}&Code=${ENAMAD_CODE}`}
-      aria-label="eNamad"
-      // Fixed-size frame so the slot keeps its place even when the logo
-      // doesn't load (eNamad only serves it on the registered domain).
-      className="grid h-[104px] w-[96px] shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.03] p-1.5 transition-colors hover:border-white/25"
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        referrerPolicy="origin"
-        src={`https://trustseal.enamad.ir/logo.aspx?id=${ENAMAD_ID}&Code=${ENAMAD_CODE}`}
-        alt=""
-        className="h-full w-full object-contain"
-        style={{ cursor: "pointer" }}
-        // Hide the browser's broken-image icon when eNamad refuses the logo
-        // (e.g. on localhost); the frame still marks the seal's spot.
-        // The ref covers a failure that happened before hydration, when
-        // onError wasn't attached yet.
-        ref={(img) => {
-          if (img?.complete && img.naturalWidth === 0) {
-            img.style.visibility = "hidden";
-          }
-        }}
-        onError={(e) => {
-          e.currentTarget.style.visibility = "hidden";
-        }}
-        {...{ code: ENAMAD_CODE }}
-      />
-    </a>
+    <div
+      className="shrink-0"
+      dangerouslySetInnerHTML={{ __html: ENAMAD_HTML }}
+    />
   );
 }
 
